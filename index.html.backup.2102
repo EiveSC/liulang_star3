@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>流浪 - 绝世美人写真集</title>
+    
+    <!-- 微信分享优化 -->
+    <meta property="og:title" content="流浪 - 绝世美人写真集">
+    <meta property="og:description" content="遇见流浪，遇见世间所有美好">
+    <meta property="og:image" content="images/share_cover.jpg">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 0;
+            margin: 0;
+            overflow-x: hidden;
+        }
+        
+        /* 背景动画 */
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        body {
+            background-size: 200% 200%;
+            animation: gradient 15s ease infinite;
+        }
+        
+        /* 飘落花瓣效果 */
+        .petals {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 100;
+            overflow: hidden;
+        }
+        
+        .petal {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 100% 0 100% 0;
+            animation: fall linear infinite;
+        }
+        
+        @keyframes fall {
+            0% {
+                transform: translate(0, -10vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(100px, 110vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.98);
+            min-height: 100vh;
+            box-shadow: 0 0 60px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* 头部 - 奢华设计 */
+        .header {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 80px 20px 60px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+            animation: rotate 30s linear infinite;
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .avatar-container {
+            position: relative;
+            width: 160px;
+            height: 160px;
+            margin: 0 auto 30px;
+        }
+        
+        .avatar {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 5px solid white;
+            object-fit: cover;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .avatar-ring {
+            position: absolute;
+            top: -15px;
+            left: -15px;
+            right: -15px;
+            bottom: -15px;
+            border: 3px solid rgba(255,255,255,0.6);
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.15); opacity: 0.6; }
+        }
+        
+        .name {
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-shadow: 0 3px 15px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 1;
+            letter-spacing: 8px;
+        }
+        
+        .subtitle {
+            font-size: 18px;
+            opacity: 0.95;
+            margin-bottom: 30px;
+            font-weight: 300;
+            letter-spacing: 3px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* 赞美文案 */
+        .praise {
+            background: linear-gradient(135deg, #fff5f7 0%, #fff9fb 100%);
+            padding: 60px 40px;
+            margin: -40px 20px 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .praise-title {
+            font-size: 28px;
+            color: #f5576c;
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: bold;
+            letter-spacing: 5px;
+        }
+        
+        .praise-text {
+            font-size: 17px;
+            line-height: 2.2;
+            color: #555;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+            font-weight: 400;
+        }
+        
+        .praise-text p {
+            margin-bottom: 25px;
+        }
+        
+        .praise-highlight {
+            color: #f5576c;
+            font-weight: bold;
+        }
+        
+        /* 画廊区域 */
+        .gallery {
+            padding: 40px 20px 60px;
+        }
+        
+        .section {
+            margin-bottom: 60px;
+        }
+        
+        .section-title {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 35px;
+            padding-left: 20px;
+            border-left: 6px solid #f5576c;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-weight: bold;
+            letter-spacing: 3px;
+        }
+        
+        /* 照片网格 - 瀑布流效果 */
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        
+        .photo-item {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            aspect-ratio: 3/4;
+            cursor: pointer;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+        }
+        
+        .photo-item:hover {
+            transform: translateY(-12px) scale(1.03);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+        }
+        
+        .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .photo-item:hover img {
+            transform: scale(1.08);
+        }
+        
+        /* 视频区域 */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+        }
+        
+        .video-item {
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+            transition: all 0.4s;
+        }
+        
+        .video-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+        }
+        
+        .video-item video {
+            width: 100%;
+            display: block;
+        }
+        
+        /* 页脚 */
+        .footer {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 40px 20px;
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .footer-heart {
+            color: #f5576c;
+            font-size: 22px;
+            animation: heartbeat 1.5s ease-in-out infinite;
+            display: inline-block;
+        }
+        
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+        }
+        
+        .footer-quote {
+            font-style: italic;
+            color: #999;
+            margin-top: 15px;
+            font-size: 13px;
+        }
+        
+        /* 灯箱效果 */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(10px);
+        }
+        
+        .lightbox img {
+            max-width: 95%;
+            max-height: 95%;
+            border-radius: 16px;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.6);
+        }
+        
+        .lightbox-close {
+            position: absolute;
+            top: 25px;
+            right: 40px;
+            color: white;
+            font-size: 55px;
+            cursor: pointer;
+            transition: transform 0.3s;
+            z-index: 1001;
+        }
+        
+        .lightbox-close:hover {
+            transform: rotate(90deg);
+            color: #f5576c;
+        }
+        
+        /* 微信适配 */
+        @media (max-width: 480px) {
+            .header {
+                padding: 50px 15px 35px;
+            }
+            
+            .avatar-container {
+                width: 130px;
+                height: 130px;
+            }
+            
+            .name {
+                font-size: 36px;
+                letter-spacing: 5px;
+            }
+            
+            .subtitle {
+                font-size: 15px;
+            }
+            
+            .praise {
+                padding: 40px 20px;
+                margin: -30px 15px 30px;
+            }
+            
+            .praise-title {
+                font-size: 22px;
+            }
+            
+            .praise-text {
+                font-size: 15px;
+                line-height: 2;
+            }
+            
+            .photo-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .video-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 飘落花瓣 -->
+    <div class="petals" id="petals"></div>
+    
+    <div class="container">
+        <!-- 头部信息 -->
+        <div class="header">
+            <div class="avatar-container">
+                <div class="avatar-ring"></div>
+                <img src="images/avatar.jpg" alt="流浪" class="avatar" id="avatar">
+            </div>
+            <h1 class="name">流浪</h1>
+            <p class="subtitle">✨ 绝世美人 · 自由灵魂 · 人间绝色 ✨</p>
+        </div>
+        
+        <!-- 赞美文案 -->
+        <div class="praise">
+            <h2 class="praise-title">💖 致流浪</h2>
+            <div class="praise-text">
+                <p>
+                    <span class="praise-highlight">她</span>，是造物主最得意的杰作，是人间四月天里最温柔的那抹春色。
+                </p>
+                <p>
+                    <span class="praise-highlight">眉眼如画</span>，藏着星辰大海的深邃；<span class="praise-highlight">笑靥如花</span>，绽放世间所有的明媚。一颦一笑，皆是风情万种；一举一动，尽显优雅从容。
+                </p>
+                <p>
+                    她的美，<span class="praise-highlight">惊鸿一瞥便刻骨铭心</span>。如清晨第一缕阳光，温暖而不灼人；似夜晚最亮的星辰，璀璨而不刺眼。她是诗与远方的化身，是梦想与现实的完美交融。
+                </p>
+                <p>
+                    <span class="praise-highlight">气质如兰</span>，淡雅中透着高贵；<span class="praise-highlight">风华绝代</span>，温柔里藏着坚韧。她走过的地方，连风都变得温柔；她注视的瞬间，连时间都为之停留。
+                </p>
+                <p>
+                    这世间所有美好的词汇，在她面前都显得苍白。唯有用心感受，方能体会这份<span class="praise-highlight">超越言语的绝代风华</span>。
+                </p>
+                <p style="text-align: right; margin-top: 30px;">
+                    —— <em>献给最美的流浪</em> 🌹
+                </p>
+            </div>
+        </div>
+        
+        <!-- 照片画廊 -->
+        <div class="gallery">
+            <div class="section">
+                <h2 class="section-title">📷 绝美瞬间</h2>
+                <div class="photo-grid" id="photoGrid">
+                    <div class="loading">
+                        <span>正在加载绝美照片...</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 视频区域 -->
+            <div class="section">
+                <h2 class="section-title">🎬 风姿绰约</h2>
+                <div class="video-grid" id="videoContainer">
+                    <div class="video-item">
+                        <video controls preload="metadata" playsinline>
+                            <source src="videos/video01.mp4" type="video/mp4">
+                            <source src="videos/video01.mov" type="video/quicktime">
+                            您的浏览器不支持视频播放
+                        </video>
+                    </div>
+                    <div class="video-item">
+                        <video controls preload="metadata" playsinline>
+                            <source src="videos/video02.mp4" type="video/mp4">
+                            <source src="videos/video02.mov" type="video/quicktime">
+                            您的浏览器不支持视频播放
+                        </video>
+                    </div>
+                    <div class="loading">
+                        <span>正在加载精彩视频...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 底部 -->
+        <div class="footer">
+            <p>Made with <span class="footer-heart">❤</span> for 流浪</p>
+            <p class="footer-quote">"世间所有的美好，都不及你回眸一笑"</p>
+            <p style="margin-top: 15px; opacity: 0.7; font-size: 12px;">© 2026 流浪写真集</p>
+        </div>
+    </div>
+    
+    <!-- 灯箱 -->
+    <div class="lightbox" id="lightbox">
+        <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+        <img src="" alt="大图" id="lightboxImg">
+    </div>
+    
+    <script>
+        // ==================== 配置区域 ====================
+        const CONFIG = {
+            personName: "流浪",
+            avatar: "images/avatar.jpg",
+            
+            // 照片列表
+            photos: [
+                "images/photo01.jpg",
+                "images/photo02.jpg",
+            ],
+            
+            // 视频列表
+            videos: [
+                { src: "videos/video01.mp4", poster: "" },
+                { src: "videos/video01.mp4", poster: "" },
+            ]
+        };
+        
+        // ==================== 创建花瓣效果 ====================
+        function createPetals() {
+            const container = document.getElementById('petals');
+            const petalCount = 20;
+            
+            for (let i = 0; i < petalCount; i++) {
+                const petal = document.createElement('div');
+                petal.className = 'petal';
+                petal.style.left = Math.random() * 100 + '%';
+                petal.style.width = (Math.random() * 20 + 10) + 'px';
+                petal.style.height = (Math.random() * 20 + 10) + 'px';
+                petal.style.animationDuration = (Math.random() * 5 + 5) + 's';
+                petal.style.animationDelay = (Math.random() * 5) + 's';
+                container.appendChild(petal);
+            }
+        }
+        
+        // ==================== 初始化页面 ====================
+        function init() {
+            // 创建花瓣
+            createPetals();
+            
+            // 设置头像
+            document.getElementById('avatar').src = CONFIG.avatar;
+            
+            // 加载照片
+            const photoGrid = document.getElementById('photoGrid');
+            photoGrid.innerHTML = '';
+            
+            CONFIG.photos.forEach((photo, index) => {
+                const item = document.createElement('div');
+                item.className = 'photo-item';
+                item.onclick = () => openLightbox(photo);
+                item.innerHTML = `<img src="${photo}" alt="流浪的照片${index + 1}" loading="lazy" onerror="this.style.display='none'">`;
+                photoGrid.appendChild(item);
+            });
+            
+            if (CONFIG.photos.length === 0) {
+                photoGrid.innerHTML = '<div class="loading"><span>暂无照片</span></div>';
+            }
+            
+            // 加载视频
+            const videoContainer = document.getElementById('videoContainer');
+            videoContainer.innerHTML = '';
+            
+            CONFIG.videos.forEach(video => {
+                const item = document.createElement('div');
+                item.className = 'video-item';
+                item.innerHTML = `
+                    <video controls poster="${video.poster || ''}" preload="metadata" playsinline>
+                        <source src="${video.src}" type="video/mp4">
+                        <source src="${video.src.replace('.mp4', '.mov')}" type="video/quicktime">
+                        您的浏览器不支持视频播放
+                    </video>
+                `;
+                videoContainer.appendChild(item);
+            });
+            
+            if (CONFIG.videos.length === 0) {
+                videoContainer.innerHTML = '<div class="loading"><span>暂无视频</span></div>';
+            }
+        }
+        
+        // ==================== 灯箱功能 ====================
+        function openLightbox(src) {
+            document.getElementById('lightboxImg').src = src;
+            document.getElementById('lightbox').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeLightbox() {
+            document.getElementById('lightbox').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        
+        document.getElementById('lightbox').onclick = function(e) {
+            if (e.target === this) {
+                closeLightbox();
+            }
+        };
+        
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeLightbox();
+            }
+        });
+        
+        // 初始化
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

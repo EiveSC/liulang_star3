@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>视频测试</title>
+    <style>
+        body { font-family: Arial; padding: 20px; background: #f5f5f5; }
+        .video { margin: 20px 0; padding: 20px; background: white; border-radius: 10px; }
+        video { max-width: 100%; background: #000; }
+    </style>
+</head>
+<body>
+    <h1>🎬 视频播放测试</h1>
+    
+    <div class="video">
+        <h2>视频 1 (video01.mp4)</h2>
+        <video controls preload="auto">
+            <source src="videos/video01.mp4" type="video/mp4">
+            您的浏览器不支持视频播放
+        </video>
+        <p>文件路径：<code>videos/video01.mp4</code></p>
+    </div>
+    
+    <div class="video">
+        <h2>视频 2 (video02.mp4)</h2>
+        <video controls preload="auto">
+            <source src="videos/video02.mp4" type="video/mp4">
+            您的浏览器不支持视频播放
+        </video>
+        <p>文件路径：<code>videos/video02.mp4</code></p>
+    </div>
+    
+    <div class="video">
+        <h2>📋 诊断信息</h2>
+        <p>浏览器：<span id="browser"></span></p>
+        <p>MP4 支持：<span id="mp4"></span></p>
+    </div>
+    
+    <script>
+        document.getElementById('browser').textContent = navigator.userAgent;
+        const v = document.createElement('video');
+        document.getElementById('mp4').textContent = v.canPlayType('video/mp4') ? '✅ 支持' : '❌ 不支持';
+    </script>
+</body>
+</html>

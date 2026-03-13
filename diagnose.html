@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>视频诊断</title>
+    <style>
+        body { font-family: Arial; padding: 20px; background: #f5f5f5; }
+        .card { background: white; padding: 20px; margin: 20px 0; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        video { max-width: 100%; background: #000; border-radius: 8px; }
+        .info { background: #e3f2fd; padding: 15px; margin: 15px 0; border-radius: 8px; font-family: monospace; }
+        .status { padding: 10px; margin: 10px 0; border-radius: 5px; font-weight: bold; }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+        .warning { background: #fff3cd; color: #856404; }
+    </style>
+</head>
+<body>
+    <h1>🎬 视频播放诊断</h1>
+    
+    <div class="card">
+        <h2>video1.mp4</h2>
+        <video id="v1" controls preload="auto" playsinline>
+            <source src="movies/video1.mp4" type="video/mp4">
+            您的浏览器不支持视频播放
+        </video>
+        <div id="s1" class="status warning">⏳ 测试中...</div>
+    </div>
+    
+    <div class="card">
+        <h2>video2.mp4</h2>
+        <video id="v2" controls preload="auto" playsinline>
+            <source src="movies/video2.mp4" type="video/mp4">
+            您的浏览器不支持视频播放
+        </video>
+        <div id="s2" class="status warning">⏳ 测试中...</div>
+    </div>
+    
+    <div class="card">
+        <h2>📋 浏览器信息</h2>
+        <div class="info">
+            <div><strong>浏览器：</strong><span id="ua"></span></div>
+            <div><strong>MP4 支持：</strong><span id="mp4"></span></div>
+            <div><strong>H.264 支持：</strong><span id="h264"></span></div>
+            <div><strong>AAC 支持：</strong><span id="aac"></span></div>
+        </div>
+    </div>
+    
+    <div class="card">
+        <h2>🔧 错误日志</h2>
+        <div id="log" class="info" style="max-height: 300px; overflow-y: auto;"></div>
+    </div>
+    
+    <script>
+        const log = document.getElementById('log');
+        function addLog(msg) {
+            log.innerHTML += '<div>' + msg + '</div>';
+        }
+        
+        // 浏览器信息
+        document.getElementById('ua').textContent = navigator.userAgent;
+        const v = document.createElement('video');
+        document.getElementById('mp4').textContent = v.canPlayType('video/mp4') || '❌';
+        document.getElementById('h264').textContent = v.canPlayType('video/mp4; codecs="avc1.42E01E"') || '❌';
+        document.getElementById('aac').textContent = v.canPlayType('video/mp4; codecs="avc1.42E01E, mp4a.40.2"') || '❌';
+        
+        // 测试视频
+        function testVideo(vid, statusId, name) {
+            const video = document.getElementById(vid);
+            const status = document.getElementById(statusId);
+            
+            addLog(`[${name}] 开始加载...`);
+            
+            video.onloadeddata = function() {
+                status.className = 'status success';
+                status.textContent = '✅ 可以播放！';
+                addLog(`[${name}] ✅ 加载成功，时长：${video.duration}秒`);
+            };
+            
+            video.onloadedmetadata = function() {
+                addLog(`[${name}] 元数据加载成功，尺寸：${video.videoWidth}x${video.videoHeight}`);
+            };
+            
+            video.onerror = function() {
+                status.className = 'status error';
+                const err = video.error;
+                let errMsg = '❌ 播放失败';
+                if (err) {
+                    switch(err.code) {
+                        case 1: errMsg += ' - 视频中止'; break;
+                        case 2: errMsg += ' - 网络错误'; break;
+                        case 3: errMsg += ' - 解码错误'; break;
+                        case 4: errMsg += ' - 不支持的格式'; break;
+                    }
+                    if (err.message) errMsg += ' (' + err.message + ')';
+                }
+                status.textContent = errMsg;
+                addLog(`[${name}] ❌ 错误代码：${err ? err.code : '未知'}`);
+                addLog(`[${name}] ❌ 错误信息：${err ? err.message : '未知'}`);
+            };
+            
+            video.load();
+        }
+        
+        testVideo('v1', 's1', 'video1.mp4');
+        testVideo('v2', 's2', 'video2.mp4');
+        
+        addLog('诊断页面加载完成');
+    </script>
+</body>
+</html>
