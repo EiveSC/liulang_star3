@@ -463,39 +463,18 @@
         </div>
         
         <!-- 底部 -->
-        <!-- 留言区域 - 服务器存储（所有用户共享） -->
+        <!-- 留言区域 - Waline 评论系统 -->
         <div class="section guestbook-section">
             <h2 class="section-title guestbook-title">💬 留言祝福墙</h2>
             <div class="guestbook-container">
-                <!-- 留言表单 -->
-                <div class="guestbook-form">
-                    <div class="form-header">
-                        <span class="form-icon">✍️</span>
-                        <h3>写下您对流浪的祝福</h3>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" id="guestName" placeholder="您的称呼（可选）" maxlength="50">
-                    </div>
-                    <div class="form-group">
-                        <textarea id="guestContent" placeholder="写下您的祝福..." maxlength="500" rows="4"></textarea>
-                    </div>
-                    <button onclick="submitGuestbook()" class="submit-btn">📤 提交留言</button>
-                    <div id="submitStatus" class="submit-status"></div>
+                <div class="waline-info">
+                    <p>💡 下方是 Waline 评论系统，开源免费的评论服务</p>
+                    <p>📝 支持多种登录方式（GitHub、微信、QQ 等）</p>
+                    <p>✅ 支持 Markdown、表情、图片上传</p>
                 </div>
                 
-                <!-- 留言列表 -->
-                <div class="guestbook-list">
-                    <div class="list-header">
-                        <span class="list-icon">📜</span>
-                        <h3>留言墙 (<span id="messageCount">0</span>)</h3>
-                    </div>
-                    <div id="messageList" class="message-list">
-                        <div class="loading">
-                            <div class="spinner"></div>
-                            <div>正在加载留言...</div>
-                        </div>
-                    </div>
-                </div>
+                <!-- Waline 评论容器 -->
+                <div id="waline" class="waline-wrapper"></div>
             </div>
         </div>
         
@@ -520,176 +499,16 @@
                 border-radius: 15px;
                 box-shadow: 0 5px 25px rgba(0,0,0,0.15);
             }
-            .form-header, .list-header {
-                display: flex;
-                align-items: center;
-                gap: 15px;
-                margin-bottom: 25px;
-            }
-            .form-icon, .list-icon {
-                font-size: 32px;
-                animation: iconBounce 2s ease-in-out infinite;
-            }
-            @keyframes iconBounce {
-                0%, 100% { transform: translateY(0); }
-                50% { transform: translateY(-5px); }
-            }
-            .form-header h3, .list-header h3 {
-                color: #667eea;
-                margin: 0;
-                font-size: 22px;
-            }
-            .guestbook-form {
-                background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-                padding: 30px;
-                border-radius: 15px;
-                margin-bottom: 35px;
-                box-shadow: 0 3px 15px rgba(0,0,0,0.08);
-                border: 2px solid #667eea;
-            }
-            .guestbook-list {
-                background: white;
-                padding: 30px;
-                border-radius: 15px;
-                box-shadow: 0 3px 15px rgba(0,0,0,0.08);
-                border: 2px solid #764ba2;
-            }
-            .form-group input,
-            .form-group textarea {
-                width: 100%;
-                padding: 15px 18px;
-                border: 2px solid #e0e0e0;
-                border-radius: 10px;
-                font-size: 15px;
-                font-family: inherit;
-                transition: all 0.3s;
-                box-sizing: border-box;
-            }
-            .form-group input:focus,
-            .form-group textarea:focus {
-                outline: none;
-                border-color: #667eea;
-                box-shadow: 0 0 10px rgba(102,126,234,0.2);
-            }
-            .form-group textarea {
-                resize: vertical;
-                min-height: 120px;
-            }
-            .submit-btn {
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                color: white;
-                border: none;
-                padding: 15px 40px;
-                border-radius: 10px;
-                font-size: 17px;
-                font-weight: bold;
-                cursor: pointer;
-                transition: all 0.3s;
-                box-shadow: 0 5px 20px rgba(102,126,234,0.4);
-            }
-            .submit-btn:hover {
-                transform: translateY(-3px);
-                box-shadow: 0 8px 25px rgba(102,126,234,0.5);
-            }
-            .submit-btn:active {
-                transform: translateY(0);
-            }
-            .submit-status {
-                margin-top: 15px;
-                padding: 12px 18px;
-                border-radius: 10px;
-                display: none;
-                font-weight: bold;
-            }
-            .submit-status.success {
-                background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
-                color: #155724;
-                display: block;
-                border: 2px solid #28a745;
-            }
-            .submit-status.error {
-                background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
-                color: #721c24;
-                display: block;
-                border: 2px solid #dc3545;
-            }
-            .list-header h3 {
-                color: #764ba2;
-            }
-            .message-list {
-                max-height: 600px;
-                overflow-y: auto;
-            }
-            .message-item {
-                background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            .waline-info {
+                background: #e3f2fd;
                 padding: 20px;
-                border-radius: 12px;
-                margin-bottom: 18px;
-                border-left: 5px solid #667eea;
-                box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-                transition: transform 0.2s;
-            }
-            .message-item:hover {
-                transform: translateX(5px);
-            }
-            .message-header {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                margin-bottom: 12px;
-                flex-wrap: wrap;
-                gap: 10px;
-            }
-            .message-name {
-                font-weight: bold;
-                color: #333;
-                font-size: 16px;
-                display: flex;
-                align-items: center;
-                gap: 8px;
-            }
-            .message-time {
-                color: #999;
-                font-size: 13px;
-            }
-            .message-content {
-                color: #555;
-                line-height: 1.7;
-                word-wrap: break-word;
-                font-size: 15px;
-            }
-            .loading {
-                text-align: center;
-                color: #999;
-                padding: 30px;
-            }
-            .spinner {
-                border: 4px solid #f3f3f3;
-                border-top: 4px solid #667eea;
-                border-radius: 50%;
-                width: 40px;
-                height: 40px;
-                animation: spin 1s linear infinite;
-                margin: 0 auto 15px;
-            }
-            @keyframes spin {
-                0% { transform: rotate(0deg); }
-                100% { transform: rotate(360deg); }
-            }
-            .empty-message {
-                text-align: center;
-                color: #999;
-                padding: 30px;
-                font-style: italic;
-                font-size: 16px;
-            }
-            .error-message {
-                text-align: center;
-                color: #dc3545;
-                padding: 20px;
-                background: #f8d7da;
                 border-radius: 10px;
-                margin: 20px 0;
+                margin-bottom: 20px;
+                color: #1976d2;
+                line-height: 1.8;
+            }
+            .waline-wrapper {
+                min-height: 400px;
             }
             @media (max-width: 600px) {
                 .guestbook-section {
@@ -701,157 +520,43 @@
             }
         </style>
         
+        <!-- Waline 评论系统初始化脚本 -->
+        <script src="https://cdn.jsdelivr.net/npm/@waline/client/dist/Waline.js"></script>
         <script>
-        const API_URL = 'http://localhost:5000/api/guestbook';
-        const CACHE_KEY = 'guestbook_cache';
-        const CACHE_TIME_KEY = 'guestbook_cache_time';
-        const CACHE_EXPIRY = 5 * 60 * 1000; // 5 分钟缓存
-        
-        // 初始化
-        function initGuestbook() {
-            loadGuestbook();
-        }
-        
-        // 加载留言（带缓存）
-        async function loadGuestbook() {
-            const messageList = document.getElementById('messageList');
-            const messageCount = document.getElementById('messageCount');
-            
-            // 检查缓存
-            const cached = localStorage.getItem(CACHE_KEY);
-            const cacheTime = localStorage.getItem(CACHE_TIME_KEY);
-            
-            if (cached && cacheTime && (Date.now() - parseInt(cacheTime)) < CACHE_EXPIRY) {
-                // 使用缓存
-                const messages = JSON.parse(cached);
-                messageCount.textContent = messages.length;
-                renderMessages(messages);
-                return;
-            }
-            
-            // 从服务器加载
-            try {
-                const response = await fetch(API_URL, {
-                    method: 'GET',
-                    headers: { 'Content-Type': 'application/json' }
-                });
-                
-                if (!response.ok) throw new Error('HTTP ' + response.status);
-                
-                const data = await response.json();
-                const messages = data.messages || [];
-                
-                // 更新缓存
-                localStorage.setItem(CACHE_KEY, JSON.stringify(messages));
-                localStorage.setItem(CACHE_TIME_KEY, Date.now().toString());
-                
-                messageCount.textContent = messages.length;
-                renderMessages(messages);
-            } catch (error) {
-                console.error('加载留言失败:', error);
-                
-                // 降级：使用旧缓存（即使过期）
-                if (cached) {
-                    const messages = JSON.parse(cached);
-                    messageCount.textContent = messages.length + ' (缓存)';
-                    renderMessages(messages);
-                } else {
-                    messageList.innerHTML = '<div class="error-message">💬 留言加载中，请稍后刷新</div>';
-                    messageCount.textContent = '0';
-                }
-            }
-        }
-        
-        // 渲染留言
-        function renderMessages(messages) {
-            const messageList = document.getElementById('messageList');
-            
-            if (messages.length === 0) {
-                messageList.innerHTML = '<div class="empty-message">暂无留言，快来留下第一条祝福吧！💕</div>';
-            } else {
-                messageList.innerHTML = messages.slice().reverse().map(msg => `
-                    <div class="message-item">
-                        <div class="message-header">
-                            <span class="message-name">👤 ${escapeHtml(msg.name)}</span>
-                            <span class="message-time">🕐 ${escapeHtml(msg.timestamp)}</span>
-                        </div>
-                        <div class="message-content">${escapeHtml(msg.content)}</div>
-                    </div>
-                `).join('');
-            }
-        }
-        
-        // 提交留言
-        async function submitGuestbook() {
-            const nameInput = document.getElementById('guestName');
-            const contentInput = document.getElementById('guestContent');
-            const statusDiv = document.getElementById('submitStatus');
-            
-            const name = nameInput.value.trim() || '匿名访客';
-            const content = contentInput.value.trim();
-            
-            if (!content) {
-                statusDiv.className = 'submit-status error';
-                statusDiv.textContent = '⚠️ 请输入留言内容';
-                statusDiv.style.display = 'block';
-                return;
-            }
-            
-            if (content.length > 500) {
-                statusDiv.className = 'submit-status error';
-                statusDiv.textContent = '⚠️ 留言内容不能超过 500 字';
-                statusDiv.style.display = 'block';
-                return;
-            }
-            
-            statusDiv.className = 'submit-status';
-            statusDiv.textContent = '⏳ 提交中...';
-            statusDiv.style.display = 'block';
-            
-            try {
-                const response = await fetch(API_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ name, content })
-                });
-                
-                if (!response.ok) throw new Error('HTTP ' + response.status);
-                
-                const result = await response.json();
-                
-                if (result.success) {
-                    statusDiv.className = 'submit-status success';
-                    statusDiv.textContent = '✅ 留言成功！感谢您的祝福！';
-                    
-                    nameInput.value = '';
-                    contentInput.value = '';
-                    
-                    // 清除缓存，重新加载
-                    localStorage.removeItem(CACHE_KEY);
-                    localStorage.removeItem(CACHE_TIME_KEY);
-                    loadGuestbook();
-                    
-                    setTimeout(() => {
-                        statusDiv.style.display = 'none';
-                    }, 3000);
-                }
-            } catch (error) {
-                statusDiv.className = 'submit-status error';
-                statusDiv.textContent = '❌ 提交失败，请稍后重试';
-                console.error('提交失败:', error);
-            }
-        }
-        
-        // HTML 转义
-        function escapeHtml(text) {
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        }
-        
-        // 页面加载时初始化
-        document.addEventListener('DOMContentLoaded', initGuestbook);
+            Waline.init({
+                el: '#waline',
+                serverURL: 'https://waline-rho-ecru.vercel.app',
+                lang: 'zh-CN',
+                pageview: true,
+                comment: true,
+                emoji: [
+                    'https://cdn.jsdelivr.net/gh/walinejs/emojis/weibo'
+                ],
+                meta: ['nick', 'mail', 'link'],
+                requiredMeta: ['nick'],
+                login: 'enable',
+                wordLimit: 0,
+                pageSize: 10,
+                imageUploader: true,
+                highlighter: true,
+                dark: 'html[data-waline-dark]',
+            });
         </script>
+        
+        <!-- 备用方案：来必力 Livere（国内访问更快） -->
+        <!-- 
+        <div id="lv-container" data-id="city" data-uid="YOUR-LIVERE-ID"></div>
+        <script type="text/javascript">
+        (function(d, s) {
+            var j, e = d.getElementsByTagName(s)[0];
+            if (typeof LivereTower === 'function') { return; }
+            j = d.createElement(s);
+            j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+            j.async = true;
+            e.parentNode.insertBefore(j, e);
+        })(document, 'script');
+        </script>
+        -->
         <div class="footer">
             <p>Made with <span class="footer-heart">❤</span> for 流浪</p>
             <p class="footer-quote">"世间所有的美好，都不及你回眸一笑"</p>
