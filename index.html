@@ -463,18 +463,18 @@
         </div>
         
         <!-- 底部 -->
-        <!-- 留言区域 - 来必力 Livere 评论系统 -->
+        <!-- 留言区域 - 畅言评论系统 -->
         <div class="section guestbook-section">
             <h2 class="section-title guestbook-title">💬 留言祝福墙</h2>
             <div class="guestbook-container">
-                <div class="livere-info">
-                    <p>💡 下方是来必力评论系统，国内访问飞快</p>
-                    <p>📝 支持微信、QQ、微博等多种登录方式</p>
-                    <p>✅ 永久免费，无需维护</p>
+                <div class="changyan-info">
+                    <p>💡 下方是畅言评论系统，搜狐出品</p>
+                    <p>📝 支持 QQ、微信、微博登录，也可游客评论</p>
+                    <p>✅ 国内访问飞快，永久免费</p>
                 </div>
                 
-                <!-- 来必力评论容器 -->
-                <div id="lv-container" data-id="city" data-uid="OYD01R7GbxG76z9xTuvH" data-base-url="livere"></div>
+                <!-- 畅言评论容器 -->
+                <div id="SOHUCS"></div>
             </div>
         </div>
         
@@ -499,7 +499,7 @@
                 border-radius: 15px;
                 box-shadow: 0 5px 25px rgba(0,0,0,0.15);
             }
-            .livere-info {
+            .changyan-info {
                 background: #e3f2fd;
                 padding: 20px;
                 border-radius: 10px;
@@ -507,7 +507,7 @@
                 color: #1976d2;
                 line-height: 1.8;
             }
-            #lv-container {
+            #SOHUCS {
                 min-height: 400px;
             }
             @media (max-width: 600px) {
@@ -520,9 +520,14 @@
             }
         </style>
         
-        <!-- 来必力 Livere 评论系统脚本 -->
-        <livere-comment client-id="OYD01R7GbxG76z9xTuvH"></livere-comment>
-        <script type="module" src="https://www.livere.org/livere-widget.js"></script>
+        <!-- 畅言评论系统脚本 -->
+        <script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js"></script>
+        <script type="text/javascript">
+            window.changyan.api.config({
+                appid: 'cyypM31w4',
+                conf: 'e92822c73f91a05cb431acb305560cb0'
+            });
+        </script>
         
         <!-- 备用方案：来必力 Livere（国内访问更快） -->
         <!-- 
