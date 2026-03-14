@@ -463,18 +463,18 @@
         </div>
         
         <!-- 底部 -->
-        <!-- 留言区域 - Waline 评论系统 -->
+        <!-- 留言区域 - 来必力 Livere 评论系统 -->
         <div class="section guestbook-section">
             <h2 class="section-title guestbook-title">💬 留言祝福墙</h2>
             <div class="guestbook-container">
-                <div class="waline-info">
-                    <p>💡 下方是 Waline 评论系统，开源免费的评论服务</p>
-                    <p>📝 支持多种登录方式（GitHub、微信、QQ 等）</p>
-                    <p>✅ 支持 Markdown、表情、图片上传</p>
+                <div class="livere-info">
+                    <p>💡 下方是来必力评论系统，国内访问飞快</p>
+                    <p>📝 支持微信、QQ、微博等多种登录方式</p>
+                    <p>✅ 永久免费，无需维护</p>
                 </div>
                 
-                <!-- Waline 评论容器 -->
-                <div id="waline" class="waline-wrapper"></div>
+                <!-- 来必力评论容器 -->
+                <div id="lv-container" data-id="city" data-uid="OYD01R7GbxG76z9xTuvH" data-base-url="livere"></div>
             </div>
         </div>
         
@@ -499,7 +499,7 @@
                 border-radius: 15px;
                 box-shadow: 0 5px 25px rgba(0,0,0,0.15);
             }
-            .waline-info {
+            .livere-info {
                 background: #e3f2fd;
                 padding: 20px;
                 border-radius: 10px;
@@ -507,7 +507,7 @@
                 color: #1976d2;
                 line-height: 1.8;
             }
-            .waline-wrapper {
+            #lv-container {
                 min-height: 400px;
             }
             @media (max-width: 600px) {
@@ -520,28 +520,9 @@
             }
         </style>
         
-        <!-- Waline 评论系统初始化脚本 -->
-        <script src="https://cdn.jsdelivr.net/npm/@waline/client/dist/Waline.js"></script>
-        <script>
-            Waline.init({
-                el: '#waline',
-                serverURL: 'https://waline-rho-ecru.vercel.app',
-                lang: 'zh-CN',
-                pageview: true,
-                comment: true,
-                emoji: [
-                    'https://cdn.jsdelivr.net/gh/walinejs/emojis/weibo'
-                ],
-                meta: ['nick', 'mail', 'link'],
-                requiredMeta: ['nick'],
-                login: 'enable',
-                wordLimit: 0,
-                pageSize: 10,
-                imageUploader: true,
-                highlighter: true,
-                dark: 'html[data-waline-dark]',
-            });
-        </script>
+        <!-- 来必力 Livere 评论系统脚本 -->
+        <livere-comment client-id="OYD01R7GbxG76z9xTuvH"></livere-comment>
+        <script type="module" src="https://www.livere.org/livere-widget.js"></script>
         
         <!-- 备用方案：来必力 Livere（国内访问更快） -->
         <!-- 
